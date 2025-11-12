@@ -78,7 +78,6 @@
                 <a href="#overview" class="nav-link text-gray-500 hover:text-blue-600 py-5 text-sm font-medium">Visão Geral</a>
                 <a href="#traceability" class="nav-link text-gray-500 hover:text-blue-600 py-5 text-sm font-medium">Rastreabilidade</a>
                 <a href="#network" class="nav-link text-gray-500 hover:text-blue-600 py-5 text-sm font-medium">Desafio da Rede</a>
-                <a href="#next-steps" class="nav-link text-gray-500 hover:text-blue-600 py-5 text-sm font-medium">Próximos Passos</a>
             </div>
         </div>
     </nav>
@@ -93,7 +92,7 @@
                     <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-center items-center">
                         <div class="text-7xl font-bold text-blue-600">213</div>
                         <div class="text-xl font-semibold text-gray-700 mt-2">Dispositivos Entregues</div>
-                        <p class="text-gray-500 text-center mt-2">Todos os gateways, sondas e sensores contratados foram entregues e instalados.</p>
+                        <p class="text-gray-500 text-center mt-2">Todos os gateways, sondas e sensores contratados foram entregues e configurados.</p>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg p-6">
                         <h3 class="text-xl font-semibold text-gray-700 text-center mb-4">Divisão de Dispositivos (Tipos)</h3>
@@ -109,7 +108,7 @@
         <section id="traceability" class="pt-16 -mt-16">
             <div class="mb-12">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Status da Rastreabilidade Metrológica</h2>
-                <p class="text-gray-600 mb-6">Para garantir o controle de qualidade e a rastreabilidade em auditorias, foi criado um mapeamento meticuloso de cada ponto de medição. O documento "SES - GO - Medidores Fracttal Sense - APIs v01" atua como a matriz de rastreabilidade, conectando o hardware físico (MAC Address) ao ativo lógico na plataforma.</p>
+                <p class="text-gray-600 mb-6">Para garantir o controle de qualidade e a rastreabilidade em auditorias, foi criado um mapeamento meticuloso de cada ponto de medição.</p>
                 <h3 class="text-xl font-semibold text-gray-700 text-center mb-4">Fluxo de Rastreabilidade do Dado</h3>
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <div class="flex flex-col md:flex-row items-center justify-center">
@@ -122,15 +121,15 @@
                         <div class="diagram-arrow">➡️</div>
                         <div class="diagram-box flex-shrink-0">
                             <span class="text-4xl">📡</span>
-                            <div class="font-bold mt-2">Gateway (Sense)</div>
-                            <div class="text-sm text-gray-500">MAC: `30:C9:22:9B:90:E8`</div>
+                            <div class="font-bold mt-2">Gateway (Fracttal Sense)</div>
+                            <div class="text-sm text-gray-500">MAC: `XX:XX:XX:XX:XX:XX`</div>
                         </div>
                         <div class="diagram-arrow-down">⬇️</div>
                         <div class="diagram-arrow">➡️</div>
                         <div class="diagram-box flex-shrink-0">
                             <span class="text-4xl">🖥️</span>
                             <div class="font-bold mt-2">Plataforma (F1)</div>
-                            <div class="text-sm text-gray-500">Ativo: `CMC_ALM_0001`</div>
+                            <div class="text-sm text-gray-500">Ativo: `[nome do ativo]`</div>
                         </div>
                     </div>
                 </div>
@@ -148,7 +147,7 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="network-box bg-red-50 border-red-300">
-                        <h4 class="text-red-700">Problema: Rede Atual ("GOIAS_DEVICES")</h4>
+                        <h4 class="text-red-700">Problema: Rede Atual ("DEVICES")</h4>
                         <p class="text-sm text-gray-600 mb-4">A rede atual é compartilhada por milhares de clientes (notebooks, celulares, IoT). Isso causa instabilidade no processo de **DHCP** (atribuição de IP), impactando a retenção de endereços IP dos sensores.</p>
                         <div class="flex flex-col space-y-2">
                             <div class="font-semibold text-gray-700">Servidor DHCP (Sobrecarregado)</div>
@@ -191,28 +190,7 @@
             </div>
         </section>
 
-        <section id="next-steps" class="pt-16 -mt-16">
-            <div class="mb-12">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Próximos Passos e Ações Requeridas</h2>
-                <p class="text-gray-600 mb-6">Com a entrega técnica e a configuração lógica concluídas, o próximo passo é a transição para a fase operacional estável. Para isso, propomos uma reunião de acompanhamento com os seguintes objetivos:</p>
-                
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Objetivos da Reunião de Acompanhamento</h3>
-                    <ul class="list-disc list-inside space-y-3 text-gray-600">
-                        <li>
-                            <span class="font-semibold text-gray-700">Equipe de TI da SES:</span> Confirmar o plano de ação e cronograma para a implementação da **VLAN segregada**.
-                        </li>
-                        <li>
-                            <span class="font-semibold text-gray-700">Equipe de Monitoramento (Teddy Henrique):</span> Validar visualmente a estabilidade da coleta de dados dos 213 medidores na plataforma Fracttal One.
-                        </li>
-                        <li>
-                            <span class="font-semibold text-gray-700">Todos:</span> Formalizar a transição do projeto da fase de "Implantação" para "Operação Assistida".
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
+       
     </main>
 
     <footer class="bg-gray-800 text-white p-6 mt-12">
@@ -230,7 +208,7 @@
                     labels: ['Congelación (Cabos)', 'Ultra (PT100)', 'Ambientes (Salas)'],
                     datasets: [{
                         label: 'Tipos de Dispositivos',
-                        data: [150, 30, 33],
+                        data: [179, 13, 21],
                         backgroundColor: [
                             '#007BFF',
                             '#6C757D',
