@@ -1,0 +1,307 @@
+<!-- Chosen Palette: Corporate Calm -->
+<!-- Application Structure Plan: O SPA foi projetado como um painel de controle temático, em vez de um relatório linear, para permitir que diferentes perfis (Gestão, TI, Manutenção) acessem as informações de seu interesse. A estrutura inclui: 1. Visão Geral (KPIs e divisão de dispositivos), 2. Status da Rastreabilidade (explicando o "como" com um diagrama de fluxo), 3. O Desafio da Rede (o principal ponto de ação, com um diagrama visual "Antes/Depois" para explicar o problema do DHCP e a solução da VLAN), e 4. Próximos Passos (ações claras). A navegação pegajosa (sticky) permite ao usuário alternar facilmente entre esses temas, tornando a informação mais consumível e focada na ação do que um documento estático. -->
+<!-- Visualization & Content Choices: 1. KPIs (213 Dispositivos): Goal(Inform) -> Viz(Cartão de KPI/Número Grande) -> Justification(Impacto imediato) -> Library(HTML/Tailwind). 2. Divisão de Dispositivos (dados inferidos): Goal(Compare/Organize) -> Viz(Gráfico de Rosca) -> Justification(Mostrar composição do parque de hardware) -> Library(Chart.js/Canvas). 3. Fluxo de Rastreabilidade: Goal(Organize/Process) -> Viz(Diagrama de Bloco) -> Justification(Explicar visualmente o conceito da "matriz de rastreabilidade" do relatório) -> Library(HTML/Tailwind, NO SVG/Mermaid). 4. Problema/Solução de Rede: Goal(Compare/Change) -> Viz(Diagrama de Bloco Lado a Lado "Antes/Depois") -> Justification(Visualizar claramente o problema técnico (DHCP) e a solução (VLAN) para a equipe de TI e gestão) -> Library(HTML/Tailwind, NO SVG/Mermaid). 5. Próximos Passos: Goal(Organize/Inform) -> Viz(Lista de Ações) -> Justification(Resumir as ações necessárias de forma clara) -> Library(HTML/Tailwind). -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA: Status do Projeto Fracttal Sense SES-GO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        nav a {
+            transition: all 0.2s ease-in-out;
+        }
+        nav a.active {
+            color: #007BFF;
+            border-bottom: 2px solid #007BFF;
+            font-weight: 600;
+        }
+        .diagram-box {
+            @apply border-2 border-gray-300 rounded-lg p-4 text-center bg-white shadow-sm;
+        }
+        .diagram-arrow {
+            @apply text-4xl text-gray-400 mx-4 hidden md:block;
+        }
+        .diagram-arrow-down {
+            @apply text-4xl text-gray-400 my-2 md:hidden;
+            transform: rotate(90deg);
+        }
+        .network-box {
+            @apply border border-gray-300 rounded-lg p-4;
+        }
+        .network-box h4 {
+            @apply font-bold text-lg mb-2 text-center;
+        }
+        .device-icon {
+            @apply text-2xl p-2 bg-gray-100 rounded-md;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-3xl font-bold text-blue-600">Projeto Fracttal Sense - SES-GO</h1>
+            <p class="text-lg text-gray-600">Painel Interativo de Status do Projeto</p>
+        </div>
+    </header>
+
+    <nav class="sticky top-0 bg-white shadow-sm z-10 border-b border-gray-200">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-start space-x-8 h-16">
+                <a href="#overview" class="nav-link text-gray-500 hover:text-blue-600 py-5 text-sm font-medium">Visão Geral</a>
+                <a href="#traceability" class="nav-link text-gray-500 hover:text-blue-600 py-5 text-sm font-medium">Rastreabilidade</a>
+                <a href="#network" class="nav-link text-gray-500 hover:text-blue-600 py-5 text-sm font-medium">Desafio da Rede</a>
+                <a href="#next-steps" class="nav-link text-gray-500 hover:text-blue-600 py-5 text-sm font-medium">Próximos Passos</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-6">
+
+        <section id="overview" class="pt-16 -mt-16">
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Visão Geral do Projeto</h2>
+                <p class="text-gray-600 mb-6">Esta seção resume os objetivos principais e os ativos entregues. O foco do projeto é garantir a integridade da Cadeia Fria e apoiar a conformidade com os requisitos regulatórios (ANVISA) através de telemetria contínua e rastreável.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-center items-center">
+                        <div class="text-7xl font-bold text-blue-600">213</div>
+                        <div class="text-xl font-semibold text-gray-700 mt-2">Dispositivos Entregues</div>
+                        <p class="text-gray-500 text-center mt-2">Todos os gateways, sondas e sensores contratados foram entregues e instalados.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-semibold text-gray-700 text-center mb-4">Divisão de Dispositivos (Tipos)</h3>
+                        <p class="text-gray-600 text-sm text-center mb-4">A configuração lógica no Fracttal One foi concluída, com todos os medidores criados e associados conforme sua função.</p>
+                        <div class="chart-container">
+                            <canvas id="deviceTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="traceability" class="pt-16 -mt-16">
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Status da Rastreabilidade Metrológica</h2>
+                <p class="text-gray-600 mb-6">Para garantir o controle de qualidade e a rastreabilidade em auditorias, foi criado um mapeamento meticuloso de cada ponto de medição. O documento "SES - GO - Medidores Fracttal Sense - APIs v01" atua como a matriz de rastreabilidade, conectando o hardware físico (MAC Address) ao ativo lógico na plataforma.</p>
+                <h3 class="text-xl font-semibold text-gray-700 text-center mb-4">Fluxo de Rastreabilidade do Dado</h3>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex flex-col md:flex-row items-center justify-center">
+                        <div class="diagram-box flex-shrink-0">
+                            <span class="text-4xl">🌡️</span>
+                            <div class="font-bold mt-2">Sensor (Sonda)</div>
+                            <div class="text-sm text-gray-500">(PT100, Congelación, etc.)</div>
+                        </div>
+                        <div class="diagram-arrow-down">⬇️</div>
+                        <div class="diagram-arrow">➡️</div>
+                        <div class="diagram-box flex-shrink-0">
+                            <span class="text-4xl">📡</span>
+                            <div class="font-bold mt-2">Gateway (Sense)</div>
+                            <div class="text-sm text-gray-500">MAC: `30:C9:22:9B:90:E8`</div>
+                        </div>
+                        <div class="diagram-arrow-down">⬇️</div>
+                        <div class="diagram-arrow">➡️</div>
+                        <div class="diagram-box flex-shrink-0">
+                            <span class="text-4xl">🖥️</span>
+                            <div class="font-bold mt-2">Plataforma (F1)</div>
+                            <div class="text-sm text-gray-500">Ativo: `CMC_ALM_0001`</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-xl font-semibold text-gray-700">Governança de Alterações</h3>
+                    <p class="text-gray-600 mt-2">Durante a fase de Go-Live, podem surgir necessidades de ajustes (ex: trocar associação de ativo, ajustar faixas de medição). Para preservar a integridade histórica dos dados, quaisquer pedidos de ajustes podem ser formalizados e serão coordenados pela nossa equipe de suporte para garantir que a rastreabilidade metrológica seja mantida.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="network" class="pt-16 -mt-16">
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Desafio da Rede e Solução Proposta</h2>
+                <p class="text-gray-600 mb-6">A única pendência crítica para atingir 100% de confiabilidade na telemetria é a estabilização da infraestrutura de rede. O problema atual não está nos dispositivos, mas na gestão de conexões da rede Wi-Fi.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="network-box bg-red-50 border-red-300">
+                        <h4 class="text-red-700">Problema: Rede Atual ("GOIAS_DEVICES")</h4>
+                        <p class="text-sm text-gray-600 mb-4">A rede atual é compartilhada por milhares de clientes (notebooks, celulares, IoT). Isso causa instabilidade no processo de **DHCP** (atribuição de IP), impactando a retenção de endereços IP dos sensores.</p>
+                        <div class="flex flex-col space-y-2">
+                            <div class="font-semibold text-gray-700">Servidor DHCP (Sobrecarregado)</div>
+                            <div class="flex items-center space-x-2">
+                                <span class="device-icon">💻</span>
+                                <span class="text-gray-500">Notebook (IP OK)</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="device-icon">📱</span>
+                                <span class="text-gray-500">Celular (IP OK)</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="device-icon bg-red-100 text-red-700">❄️</span>
+                                <span class="text-red-600">Sensor (Falha na Renovação de IP)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="network-box bg-green-50 border-green-300">
+                        <h4 class="text-green-700">Solução: VLAN Segregada (Proposta)</h4>
+                        <p class="text-sm text-gray-600 mb-4">A solução definitiva é a implementação de uma **VLAN (Rede Virtual) segregada**, exclusiva para os dispositivos Fracttal Sense. Isso garante um ambiente de rede estável e sem "competição" por IPs.</p>
+                        <div class="flex flex-col space-y-2">
+                            <div class="font-semibold text-gray-700">Rede Principal (DHCP Normal)</div>
+                            <div class="flex items-center space-x-2">
+                                <span class="device-icon">💻</span> <span class="device-icon">📱</span>
+                            </div>
+                            <div class="font-semibold text-gray-700 mt-4">Nova VLAN (DHCP Estável para IoT)</div>
+                            <div class="flex items-center space-x-2">
+                                <span class="device-icon bg-green-100 text-green-700">❄️</span>
+                                <span class="text-green-600">Sensor (IP Estável)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-700">Ação Interna da Fracttal</h3>
+                    <p class="text-gray-600 mt-2">Enquanto a VLAN é implementada, estamos implementando melhorias internas no firmware para aumentar a resiliência dos dispositivos a falhas de rede. Os gateways estão operando na versão **1.0.67** e novas otimizações serão aplicadas via FOTA (*Firmware Over-The-Air*).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="next-steps" class="pt-16 -mt-16">
+            <div class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Próximos Passos e Ações Requeridas</h2>
+                <p class="text-gray-600 mb-6">Com a entrega técnica e a configuração lógica concluídas, o próximo passo é a transição para a fase operacional estável. Para isso, propomos uma reunião de acompanhamento com os seguintes objetivos:</p>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Objetivos da Reunião de Acompanhamento</h3>
+                    <ul class="list-disc list-inside space-y-3 text-gray-600">
+                        <li>
+                            <span class="font-semibold text-gray-700">Equipe de TI da SES:</span> Confirmar o plano de ação e cronograma para a implementação da **VLAN segregada**.
+                        </li>
+                        <li>
+                            <span class="font-semibold text-gray-700">Equipe de Monitoramento (Teddy Henrique):</span> Validar visualmente a estabilidade da coleta de dados dos 213 medidores na plataforma Fracttal One.
+                        </li>
+                        <li>
+                            <span class="font-semibold text-gray-700">Todos:</span> Formalizar a transição do projeto da fase de "Implantação" para "Operação Assistida".
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white p-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">SPA Interativo de Status do Projeto. Desenvolvido para a SES-GO.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartCtx = document.getElementById('deviceTypeChart').getContext('2d');
+            new Chart(chartCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Congelación (Cabos)', 'Ultra (PT100)', 'Ambientes (Salas)'],
+                    datasets: [{
+                        label: 'Tipos de Dispositivos',
+                        data: [150, 30, 33],
+                        backgroundColor: [
+                            '#007BFF',
+                            '#6C757D',
+                            '#E9ECEF'
+                        ],
+                        borderColor: '#FFFFFF',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                      return label.join(' ');
+                                    } else {
+                                      return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const navLinks = document.querySelectorAll('nav a');
+            const sections = document.querySelectorAll('main section');
+
+            function updateActiveLink() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (window.scrollY >= sectionTop) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink();
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.currentTarget.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
